@@ -5,7 +5,7 @@ import HomeScreen from '../Screens/HomeScreen';
 import ResultsScreen from '../Screens/ResultsScreen';
 import TestScreen from '../Screens/TestScreen';
 
-type DrawerParamList = {
+export type DrawerParamList = {
     Home: undefined;
     Results: undefined;
     Test: undefined;

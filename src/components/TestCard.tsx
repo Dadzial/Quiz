@@ -1,0 +1,44 @@
+import {View, Text, TouchableOpacity} from "react-native";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {StyleSheet} from "react-native";
+
+interface testCardProps {
+    title: string;
+    description: string;
+
+}
+
+const TestCard = ({title, description}: testCardProps) => {
+    return (
+        <TouchableOpacity style={styles.mainContainer}>
+            <Text style={styles.titleText}>{title}</Text>
+            <Text style={styles.descriptionText}>{description}</Text>
+        </TouchableOpacity>
+    );
+}
+
+const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        backgroundColor: '#295ac1',
+        borderRadius:15,
+        marginVertical:10,
+        marginHorizontal:10,
+    },
+    titleText: {
+        fontSize: 16,
+        marginLeft:10,
+        fontWeight: 'bold',
+        color: '#ffffff',
+        marginVertical: 10,
+    },
+    descriptionText: {
+        fontSize: 14,
+        marginLeft:10,
+        color: '#ffffff',
+    },
+});
+
+export default TestCard;
