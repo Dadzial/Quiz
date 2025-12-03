@@ -28,6 +28,7 @@ const HomeScreen = () => {
                         key={index}
                         title={test.title}
                         description={test.description}
+                        onPress={() => navigation.navigate("Test")}
                     />
                 ))}
 

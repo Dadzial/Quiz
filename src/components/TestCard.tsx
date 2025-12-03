@@ -5,12 +5,12 @@ import {StyleSheet} from "react-native";
 interface testCardProps {
     title: string;
     description: string;
-
+    onPress?: () => void
 }
 
-const TestCard = ({title, description}: testCardProps) => {
+const TestCard = ({title, description, onPress}: testCardProps) => {
     return (
-        <TouchableOpacity style={styles.mainContainer}>
+        <TouchableOpacity style={styles.mainContainer} onPress={onPress}>
             <Text style={styles.titleText}>{title}</Text>
             <Text style={styles.descriptionText}>{description}</Text>
         </TouchableOpacity>
