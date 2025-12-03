@@ -1,5 +1,5 @@
 import {createDrawerNavigator, DrawerContentScrollView, DrawerNavigationProp, DrawerItemList} from '@react-navigation/drawer';
-import { View, Text, TouchableOpacity } from 'react-native';
+import {View, Text, TouchableOpacity, StatusBar} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HomeScreen from '../Screens/HomeScreen';
 import ResultsScreen from '../Screens/ResultsScreen';
@@ -25,12 +25,12 @@ const CustomHeader = ({ navigation }: HeaderProps) => {
             style={{ backgroundColor: '#fff' }}
         >
             <View style={{
-                height: 60,
+                height: 40,
                 backgroundColor: '#fff',
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
-                paddingHorizontal: 10,
+                paddingHorizontal: 40,
             }}>
                 <TouchableOpacity
                     style={{ position: 'absolute', left: 15 }}
@@ -75,8 +75,8 @@ const NavDrawer = () => {
             drawerContent={(props) => <CustomDrawerContent {...props} />}
         >
             <Drawer.Screen name="Home" component={HomeScreen} />
-            <Drawer.Screen name="Results" component={ResultsScreen} />
             <Drawer.Screen name="Test" component={TestScreen} />
+            <Drawer.Screen name="Results" component={ResultsScreen} />
         </Drawer.Navigator>
     );
 };
