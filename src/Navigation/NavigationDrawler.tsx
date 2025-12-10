@@ -8,7 +8,9 @@ import TestScreen from '../Screens/TestScreen';
 export type DrawerParamList = {
     Home: undefined;
     Results: undefined;
-    Test: undefined;
+    Test: { taskIndex: number };
+
+
 };
 
 type HeaderProps = {
