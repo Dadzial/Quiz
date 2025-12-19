@@ -17,18 +17,26 @@ const ResultsScreen = () => {
     const fetchResults = async () => {
         setRefreshing(true);
         try {
-            const res = await fetch("https://tgryl.pl/quiz/results?last=20");
+            const res = await fetch("https://tgryl.pl/quiz/results?last=20", {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            });
+
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
             const json = await res.json();
+
             const mappedResults: Result[] = json.map((item: any) => ({
                 nick: item.nick,
                 score: item.score,
                 total: item.total,
                 type: item.type,
-                date: item.createdOn
+                date: item.createdOn,
             }));
+
             setResults(mappedResults);
         } catch (error) {
-            console.log(error);
+            console.log("Fetch error:", error);
         } finally {
             setRefreshing(false);
         }

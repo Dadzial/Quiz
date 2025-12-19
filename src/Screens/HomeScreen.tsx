@@ -9,25 +9,20 @@ import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts, Inter_400Regular, Inter_700Bold } from '@expo-google-fonts/inter';
 
-interface Task {
-    title: string;
+interface Quiz {
+    id: string;
+    name: string;
     description: string;
+    tags?: string[];
+    level?: string;
+    numberOfTasks?: number;
 }
-
-const tasks: Task[] = [
-    { title: "Historia Rzymu", description: "Test wiedzy o historii starożytnego Rzymu" },
-    { title: "Geografia Europy", description: "Sprawdź swoją wiedzę geograficzną" },
-    { title: "Matematyka", description: "Test z matematyki dla zaawansowanych" },
-    { title: "Biologia", description: "Quiz biologiczny z ciekawostkami" },
-
-];
 
 const HomeScreen = () => {
     const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
     const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null);
+    const [quizzes, setQuizzes] = useState<Quiz[]>([]);
     const [fontsLoaded] = useFonts({ Inter_700Bold, Inter_400Regular });
-
-
 
     const handleAccept = async () => {
         try {
@@ -50,6 +45,19 @@ const HomeScreen = () => {
         checkFirstLaunch();
     }, []);
 
+    useEffect(() => {
+        const fetchQuizzes = async () => {
+            try {
+                const res = await fetch("https://tgryl.pl/quiz/tests", { method: "GET" });
+                const json = await res.json();
+                setQuizzes(json);
+            } catch (error) {
+                console.log("Fetch quizzes error:", error);
+            }
+        };
+        fetchQuizzes();
+    }, []);
+
     if (!fontsLoaded) return null;
 
     if (isFirstLaunch === true) {
@@ -58,20 +66,16 @@ const HomeScreen = () => {
 
     return (
         <SafeAreaView edges={["bottom"]} style={styles.mainContainer}>
-            <ScrollView
-                contentContainerStyle={{ ...styles.scrollContent, flexGrow: 1 }}
-                style={{ flex: 1 }}
-            >
+            <ScrollView contentContainerStyle={{ ...styles.scrollContent, flexGrow: 1 }}>
                 <Text style={styles.ScreenNameText}>Available Quizzes</Text>
 
-
                 <ScrollView>
-                    {tasks.map((task, index) => (
+                    {quizzes.map((quiz) => (
                         <TestCard
-                            key={index}
-                            title={task.title}
-                            description={task.description}
-                            onPress={() => navigation.navigate("Test", { taskIndex: index })}
+                            key={quiz.id}
+                            title={quiz.name || "Untitled"}
+                            description={quiz.description || "No description"}
+                            onPress={() => navigation.navigate("Test", { testId: quiz.id })}
                         />
                     ))}
                 </ScrollView>
