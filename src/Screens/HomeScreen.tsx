@@ -4,8 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import { DrawerParamList } from "../Navigation/NavigationDrawler";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 import WelcomeScreen from "./WelcomeScreen";
+import TestCard from "../components/TestCard";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFonts, Inter_400Regular, Inter_700Bold } from '@expo-google-fonts/inter';
 
 interface Task {
     title: string;
@@ -17,11 +19,15 @@ const tasks: Task[] = [
     { title: "Geografia Europy", description: "Sprawdź swoją wiedzę geograficzną" },
     { title: "Matematyka", description: "Test z matematyki dla zaawansowanych" },
     { title: "Biologia", description: "Quiz biologiczny z ciekawostkami" },
+
 ];
 
 const HomeScreen = () => {
     const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
     const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null);
+    const [fontsLoaded] = useFonts({ Inter_700Bold, Inter_400Regular });
+
+
 
     const handleAccept = async () => {
         try {
@@ -44,6 +50,8 @@ const HomeScreen = () => {
         checkFirstLaunch();
     }, []);
 
+    if (!fontsLoaded) return null;
+
     if (isFirstLaunch === true) {
         return <WelcomeScreen onAccept={handleAccept} />;
     }
@@ -56,16 +64,17 @@ const HomeScreen = () => {
             >
                 <Text style={styles.ScreenNameText}>Available Quizzes</Text>
 
-                {tasks.map((task, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        style={styles.quizCard}
-                        onPress={() => navigation.navigate("Test", { taskIndex: index })}
-                    >
-                        <Text style={styles.quizTitle}>{task.title}</Text>
-                        <Text style={styles.quizDescription}>{task.description}</Text>
-                    </TouchableOpacity>
-                ))}
+
+                <ScrollView>
+                    {tasks.map((task, index) => (
+                        <TestCard
+                            key={index}
+                            title={task.title}
+                            description={task.description}
+                            onPress={() => navigation.navigate("Test", { taskIndex: index })}
+                        />
+                    ))}
+                </ScrollView>
 
                 <View style={styles.footer}>
                     <TouchableOpacity
@@ -92,25 +101,9 @@ const styles = StyleSheet.create({
     ScreenNameText: {
         textAlign: "center",
         fontSize: 22,
-        fontWeight: "bold",
         color: "#295ac1",
         marginVertical: 15,
-    },
-    quizCard: {
-        backgroundColor: "#dce6ff",
-        padding: 15,
-        borderRadius: 12,
-        marginBottom: 12,
-    },
-    quizTitle: {
-        fontSize: 18,
-        fontWeight: "bold",
-        color: "#295ac1",
-    },
-    quizDescription: {
-        fontSize: 14,
-        color: "#295ac1",
-        marginTop: 5,
+        fontFamily: 'Inter_700Bold',
     },
     footer: {
         marginTop: 20,

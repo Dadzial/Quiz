@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
-        backgroundColor: '#295ac1',
+        backgroundColor: '#dce6ff',
         borderRadius:15,
         marginVertical:10,
         marginHorizontal:10,
@@ -30,13 +30,14 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginLeft:10,
         fontWeight: 'bold',
-        color: '#ffffff',
+        color: '#295ac1',
         marginVertical: 10,
     },
     descriptionText: {
         fontSize: 14,
         marginLeft:10,
-        color: '#ffffff',
+        color: '#295ac1',
+        marginBottom:15,
     },
 });
 

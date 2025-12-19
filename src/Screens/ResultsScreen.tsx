@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, {useState, useCallback, useEffect} from "react";
 import { View, Text, StyleSheet, FlatList, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -10,22 +10,36 @@ interface Result {
     date: string;
 }
 
-const initialResults: Result[] = [
-    { nick: "Marek", score: 18, total: 20, type: "historia", date: "2022-11-22" },
-    { nick: "Alice", score: 15, total: 20, type: "matematyka", date: "2022-11-21" },
-    { nick: "Bob", score: 12, total: 15, type: "geografia", date: "2022-11-20" },
-];
-
 const ResultsScreen = () => {
-    const [results, setResults] = useState<Result[]>(initialResults);
+    const [results, setResults] = useState<Result[]>([]);
     const [refreshing, setRefreshing] = useState(false);
 
-    const onRefresh = useCallback(() => {
+    const fetchResults = async () => {
         setRefreshing(true);
-        // Symulacja odświeżania, tutaj możesz pobierać dane z API
-        setTimeout(() => {
+        try {
+            const res = await fetch("https://tgryl.pl/quiz/results?last=20");
+            const json = await res.json();
+            const mappedResults: Result[] = json.map((item: any) => ({
+                nick: item.nick,
+                score: item.score,
+                total: item.total,
+                type: item.type,
+                date: item.createdOn
+            }));
+            setResults(mappedResults);
+        } catch (error) {
+            console.log(error);
+        } finally {
             setRefreshing(false);
-        }, 1000);
+        }
+    };
+
+    useEffect(() => {
+        fetchResults();
+    }, []);
+
+    const onRefresh = useCallback(() => {
+        fetchResults();
     }, []);
 
     const renderItem = ({ item }: { item: Result }) => (
@@ -115,7 +129,7 @@ const styles = StyleSheet.create({
     },
     rowCell: {
         flex: 1,
-        paddingVertical: 6,
+        paddingVertical: 6.2,
         paddingHorizontal: 4,
         backgroundColor: "#d0e1ff",
         alignItems: "center",
@@ -123,7 +137,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         marginHorizontal: 2,
     },
-    rowText: { fontSize: 14, color: "#000000", textAlign: "center" },
+    rowText: { fontSize: 11, color: "#000000", textAlign: "center" },
 });
 
 export default ResultsScreen;

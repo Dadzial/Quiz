@@ -49,7 +49,7 @@ const TestScreen = () => {
         if (currentIndex + 1 < tasks.length) {
             setCurrentIndex(currentIndex + 1);
         } else {
-            navigation.navigate("Results"); // po teście przejście do Results
+            navigation.navigate("Results");
         }
     };
 
