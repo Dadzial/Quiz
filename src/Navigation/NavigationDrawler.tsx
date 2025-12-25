@@ -63,6 +63,8 @@ const CustomDrawerContent = (props: DrawerProps) => {
 
             <DrawerItemList {...props} />
 
+            <View style={{ height: 1, backgroundColor: "#295ac1", opacity:0.5 , marginVertical: 10 }} />
+
         </DrawerContentScrollView>
     );
 };
