@@ -51,7 +51,6 @@ const TestScreen = () => {
                         duration: t.duration,
                     };
                 });
-
                 setTasks(mappedTasks);
             } catch (e) {
                 console.log("FETCH ERROR:", e);
@@ -133,9 +132,9 @@ const TestScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    mainContainer: { flex: 1, padding: 10 },
-    ScreenNameText: { fontSize: 18, fontWeight: "bold", textAlign: "center" },
-    questionText: { fontSize: 20, marginVertical: 20, textAlign: "center" },
+    mainContainer: { flex: 1, padding: 20,backgroundColor: "#fff" },
+    ScreenNameText: { fontSize: 18, fontWeight: "bold", textAlign: "center" ,marginVertical: -10},
+    questionText: { fontSize: 20, marginVertical: 10, textAlign: "center" },
     answerButton: {
         backgroundColor: "#295ac1",
         padding: 15,
